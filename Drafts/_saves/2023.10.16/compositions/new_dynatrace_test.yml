@@ -1,0 +1,65 @@
+---
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: xdynatraces.composite.clouddatabase.allianz.io
+  namespace: customer
+  labels:
+    provider: aws
+    implementation: terraform
+spec:
+  compositeTypeRef:
+    apiVersion: composite.clouddatabase.allianz.io/v1alpha1
+    kind: XDynatrace
+  resources:
+  - name: tf-dynatrace
+    base:
+      apiVersion: tf.upbound.io/v1beta1
+      kind: Workspace
+      metadata:
+        annotations:
+          platform.cloud.allianz/service-name: "FCP Dynatrace Integration"
+      spec:
+        providerConfigRef:
+          # patched
+          name:
+        forProvider:
+          source: Remote
+          module: git::https://github.developer.allianz.io/azdcloud-ops/db-service-team-terraform-modules.git?ref=feature/dynatrace
+          entrypoint: crossplane_modules/dynatrace
+          vars:
+          - key: dashboard_name
+          - key: github_owner
+          - key: github_token
+          - key: customer_repository
+          - key: dynatrace_management_zone
+          - key: snow_f_group
+          - key: email_recipients
+          - key: auto_config
+          - key: db_tags
+          varmap:
+            dynatrace_vars:
+            # patched
+    patches:
+    - fromFieldPath: spec.parameters.dashboard_name
+      toFieldPath: spec.forProvider.vars[0].value
+    - fromFieldPath: spec.parameters.github_owner
+      toFieldPath: spec.forProvider.vars[1].value
+    - fromFieldPath: spec.parameters.github_token
+      toFieldPath: spec.forProvider.vars[2].value
+    - fromFieldPath: spec.parameters.customer_repository
+      toFieldPath: spec.forProvider.vars[3].value
+    - fromFieldPath: spec.parameters.dynatrace_management_zone
+      toFieldPath: spec.forProvider.vars[4].value
+    - fromFieldPath: spec.parameters.snow_f_group
+      toFieldPath: spec.forProvider.vars[5].value
+    - fromFieldPath: spec.parameters.email_recipients
+      toFieldPath: spec.forProvider.vars[6].value
+    - fromFieldPath: spec.parameters.auto_config
+      toFieldPath: spec.forProvider.vars[7].value
+    - fromFieldPath: spec.parameters.db_tags
+      toFieldPath: spec.forProvider.vars[8].value
+    - fromFieldPath: spec.parameters.provider_configuration
+      toFieldPath: spec.providerConfigRef.name
+    - fromFieldPath: spec.parameters.dynatrace_vars
+      toFieldPath: spec.forProvider.varmap.dynatrace_vars

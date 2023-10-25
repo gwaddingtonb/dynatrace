@@ -1,0 +1,128 @@
+---
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  name: xdynatraces.composite.clouddatabase.allianz.io
+  namespace: customer
+spec:
+  group: composite.clouddatabase.allianz.io
+  names:
+    kind: XDynatrace
+    plural: xdynatraces
+  claimNames:
+    kind: Dynatrace
+    plural: dynatraces
+  defaultCompositionRef:
+    name: xdynatraces.composite.clouddatabase.allianz.io
+  versions:
+  - name: v1alpha1
+    served: true
+    referenceable: true
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            type: object
+            properties:
+              parameters:
+                type: object
+                properties:
+                  dashboard_name:
+                    type: string
+                    default: ""
+                  github_owner:
+                    type: string
+                    default: "globalmonitoring"
+                  github_token:
+                    type: string
+                    default: ""
+                  customer_repository:
+                    type: string
+                    default: ""
+                  dynatrace_management_zone:
+                    type: string
+                    default: ""
+                  snow_f_group:
+                    type: string
+                    default: ""
+                  email_recipients:
+                    type: string
+                    default: ""
+                  auto_config:
+                    type: string
+                    default: "false"
+                  db_tags:
+                    type: string
+                    default: ""
+                  provider_configuration:
+                    type: string
+                    default: github-4-dynatrace-v1
+                  dynatrace_vars:
+                    type: object
+                    properties:
+                      dynatrace_alerting_profile:
+                        type: string
+                        default: "default.yml"
+                      notification_email:
+                        type: string
+                        default: "true"
+                      notification_snow:
+                        type: string
+                        default: "false"
+                      notification_zis:
+                        type: string
+                        default: "true"
+                      metric_groups:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                            graph:
+                              type: string
+                            aggregation:
+                              type: string
+                            condition:
+                              type: string
+                            warning_threshold:
+                              type: string
+                            error_threshold:
+                              type: string
+                        default:
+                        - name: "CPU Usage"
+                          graph: "builtin:cloud.aws.rds.cpu.usage"
+                          aggregation: "AVG"
+                          condition: "ABOVE"
+                          warning_threshold: "95"
+                          error_threshold: "99"
+                        - name: "Read IOPS"
+                          graph: "builtin:cloud.aws.rds.ops.read"
+                          aggregation: "AVG"
+                          condition: "ABOVE"
+                          warning_threshold: "10000"
+                          error_threshold: "20000"
+                        - name: "Write IOPS"
+                          graph: "builtin:cloud.aws.rds.ops.write"
+                          aggregation: "AVG"
+                          condition: "ABOVE"
+                          warning_threshold: "10000"
+                          error_threshold: "20000"
+                        - name: "SWAP Usage"
+                          graph: "builtin:cloud.aws.rds.memory.swap"
+                          aggregation: "AVG"
+                          condition: "ABOVE"
+                          warning_threshold: "3.5"
+                          error_threshold: "4.0"
+                        - name: "Free Memory"
+                          graph: "builtin:cloud.aws.rds.memory.freeable"
+                          aggregation: "AVG"
+                          condition: "BELOW"
+                          warning_threshold: "100"
+                          error_threshold: "10"
+                required:
+                - dashboard_name
+                - db_tags
+            required:
+            - parameters

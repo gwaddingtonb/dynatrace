@@ -1,0 +1,48 @@
+{
+  "schemaId": "builtin:anomaly-detection.metric-events",
+  "schemaVersion": "1.0.14",
+  "scope": "environment",
+  "value": {
+    "enabled": true,
+    "summary": "${MANAGEMENT_ZONE} - ${DASHBOARD_NAME} - ${PARAM3_NAME}",
+    "queryDefinition": {
+      "type": "METRIC_KEY",
+      "metricKey": "${PARAM3_GRAPH}",
+      "aggregation": "${PARAM3_AGGREGATION}",
+      "entityFilter": {
+        "dimensionKey": "dt.entity.relational_database_service",
+        "conditions": [
+          {
+            "type": "TAG",
+            "operator": "EQUALS",
+            "value": "${DB_TAGS}"
+          },
+          {
+            "type": "MANAGEMENT_ZONE",
+            "operator": "EQUALS",
+            "value": "${MANAGEMENT_ZONE}"
+          }
+        ]
+      },
+      "dimensionFilter": []
+    },
+    "modelProperties": {
+      "type": "STATIC_THRESHOLD",
+      "threshold": ${PARAM3_THRESHOLD_RED},
+      "alertOnNoData": false,
+      "alertCondition": "${PARAM3_CONDITION}",
+      "violatingSamples": 5,
+      "samples": 30,
+      "dealertingSamples": 30
+    },
+    "eventTemplate": {
+      "title": "${MANAGEMENT_ZONE} - ${PARAM3_NAME}",
+      "description": "${PARAM3_NAME} Custom Alert",
+      "eventType": "CUSTOM_ALERT",
+      "davisMerge": false,
+      "metadata": []
+    },
+    "eventEntityDimensionKey": "dt.entity.relational_database_service",
+    "legacyId":null
+  }
+}

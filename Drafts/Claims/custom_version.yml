@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: product-versions
+  namespace: custom-versioning
+data:
+  cloudDatabasePackage: 1.0.8-scc075160g9667c19.183.9667c19

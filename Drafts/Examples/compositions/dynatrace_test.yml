@@ -1,0 +1,166 @@
+---
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: xdynatracedashboardtests.composite.clouddatabase.allianz.io
+  namespace: customer
+  labels:
+    provider: aws
+    implementation: terraform
+spec:
+  compositeTypeRef:
+    apiVersion: composite.clouddatabase.allianz.io/v1alpha1
+    kind: XDynatraceDashboardTest
+  resources:
+  - name: tf-dynatracedashboardtest
+    base:
+      apiVersion: tf.upbound.io/v1beta1
+      kind: Workspace
+      metadata:
+      spec:
+        providerConfigRef:
+          # patched
+          name:
+        forProvider:
+          source: Remote
+          module: git::https://github.developer.allianz.io/azdcloud-ops/db-service-team-terraform-modules.git?ref=feature/dynatrace
+          entrypoint: crossplane_modules/dynatrace
+          vars:
+          - key: dashboard_name
+          - key: github_owner
+          - key: github_token
+          - key: customer_repository
+          - key: dynatrace_management_zone
+          - key: dynatrace_alerting_profile
+          - key: notification_email
+          - key: notification_snow
+          - key: notification_zis
+          - key: param1_name
+          - key: param1_graph
+          - key: param1_aggregation
+          - key: param1_condition
+          - key: param1_threshold_orange
+          - key: param1_threshold_red
+          - key: param2_name
+          - key: param2_graph
+          - key: param2_aggregation
+          - key: param2_condition
+          - key: param2_threshold_orange
+          - key: param2_threshold_red
+          - key: param3_name
+          - key: param3_graph
+          - key: param3_aggregation
+          - key: param3_condition
+          - key: param3_threshold_orange
+          - key: param3_threshold_red
+          - key: param4_name
+          - key: param4_graph
+          - key: param4_aggregation
+          - key: param4_condition
+          - key: param4_threshold_orange
+          - key: param4_threshold_red
+          - key: param5_name
+          - key: param5_graph
+          - key: param5_aggregation
+          - key: param5_condition
+          - key: param5_threshold_orange
+          - key: param5_threshold_red
+          - key: snow_f_group
+          - key: email_recepients
+          - key: meta_dynatrace_management_zone
+          - key: meta_customer_repository
+          varmap:
+            # patched
+            db_tags:
+            # patched
+      patches:
+      - fromFieldPath: spec.parameters.dashboard_name
+        toFieldPath: spec.forProvider.vars[0].value
+      - fromFieldPath: spec.parameters.github_owner
+        toFieldPath: spec.forProvider.vars[1].value
+      - fromFieldPath: spec.parameters.github_token
+        toFieldPath: spec.forProvider.vars[2].value
+      - fromFieldPath: spec.parameters.customer_repository
+        toFieldPath: spec.forProvider.vars[3].value
+      - fromFieldPath: spec.parameters.dynatrace_management_zone
+        toFieldPath: spec.forProvider.vars[4].value
+      - fromFieldPath: spec.parameters.dynatrace_alerting_profile
+        toFieldPath: spec.forProvider.vars[5].value
+      - fromFieldPath: spec.parameters.notification_email
+        toFieldPath: spec.forProvider.vars[6].value
+      - fromFieldPath: spec.parameters.notification_snow
+        toFieldPath: spec.forProvider.vars[7].value
+      - fromFieldPath: spec.parameters.notification_zis
+        toFieldPath: spec.forProvider.vars[8].value
+      - fromFieldPath: spec.parameters.param1_name
+        toFieldPath: spec.forProvider.vars[9].value
+      - fromFieldPath: spec.parameters.param1_graph
+        toFieldPath: spec.forProvider.vars[10].value
+      - fromFieldPath: spec.parameters.param1_aggregation
+        toFieldPath: spec.forProvider.vars[11].value
+      - fromFieldPath: spec.parameters.param1_condition
+        toFieldPath: spec.forProvider.vars[12].value
+      - fromFieldPath: spec.parameters.param1_threshold_orange
+        toFieldPath: spec.forProvider.vars[13].value
+      - fromFieldPath: spec.parameters.param1_threshold_red
+        toFieldPath: spec.forProvider.vars[14].value
+      - fromFieldPath: spec.parameters.param2_name
+        toFieldPath: spec.forProvider.vars[15].value
+      - fromFieldPath: spec.parameters.param2_graph
+        toFieldPath: spec.forProvider.vars[16].value
+      - fromFieldPath: spec.parameters.param2_aggregation
+        toFieldPath: spec.forProvider.vars[17].value
+      - fromFieldPath: spec.parameters.param2_condition
+        toFieldPath: spec.forProvider.vars[18].value
+      - fromFieldPath: spec.parameters.param2_threshold_orange
+        toFieldPath: spec.forProvider.vars[19].value
+      - fromFieldPath: spec.parameters.param2_threshold_red
+        toFieldPath: spec.forProvider.vars[20].value
+      - fromFieldPath: spec.parameters.param3_name
+        toFieldPath: spec.forProvider.vars[21].value
+      - fromFieldPath: spec.parameters.param3_graph
+        toFieldPath: spec.forProvider.vars[22].value
+      - fromFieldPath: spec.parameters.param3_aggregation
+        toFieldPath: spec.forProvider.vars[23].value
+      - fromFieldPath: spec.parameters.param3_condition
+        toFieldPath: spec.forProvider.vars[24].value
+      - fromFieldPath: spec.parameters.param3_threshold_orange
+        toFieldPath: spec.forProvider.vars[25].value
+      - fromFieldPath: spec.parameters.param3_threshold_red
+        toFieldPath: spec.forProvider.vars[26].value
+      - fromFieldPath: spec.parameters.param4_name
+        toFieldPath: spec.forProvider.vars[27].value
+      - fromFieldPath: spec.parameters.param4_graph
+        toFieldPath: spec.forProvider.vars[28].value
+      - fromFieldPath: spec.parameters.param4_aggregation
+        toFieldPath: spec.forProvider.vars[29].value
+      - fromFieldPath: spec.parameters.param4_condition
+        toFieldPath: spec.forProvider.vars[30].value
+      - fromFieldPath: spec.parameters.param4_threshold_orange
+        toFieldPath: spec.forProvider.vars[31].value
+      - fromFieldPath: spec.parameters.param4_threshold_red
+        toFieldPath: spec.forProvider.vars[32].value
+      - fromFieldPath: spec.parameters.param5_name
+        toFieldPath: spec.forProvider.vars[33].value
+      - fromFieldPath: spec.parameters.param5_graph
+        toFieldPath: spec.forProvider.vars[34].value
+      - fromFieldPath: spec.parameters.param5_aggregation
+        toFieldPath: spec.forProvider.vars[35].value
+      - fromFieldPath: spec.parameters.param5_condition
+        toFieldPath: spec.forProvider.vars[36].value
+      - fromFieldPath: spec.parameters.param5_threshold_orange
+        toFieldPath: spec.forProvider.vars[37].value
+      - fromFieldPath: spec.parameters.param5_threshold_red
+        toFieldPath: spec.forProvider.vars[38].value
+      - fromFieldPath: metadata.annotations[platform.cloud.allianz/assignment-group]    # snow_f_group from metadata
+        toFieldPath: spec.forProvider.vars[39].value
+      - fromFieldPath: metadata.annotations[platform.cloud.allianz/owner1]              # email_recepients from metadata
+        toFieldPath: spec.forProvider.vars[40].value
+      - fromFieldPath: metadata.annotations[platform.cloud.allianz/profile-name]        # IaC Profile from Metadata
+        toFieldPath: spec.forProvider.vars[41].value
+      - fromFieldPath: metadata.annotations[dynatrace.platform.cloud.allianz/mz-name]   # Management Zone from Metadata
+        toFieldPath: spec.forProvider.vars[42].value
+      - fromFieldPath: spec.parameters.provider_configuration
+        toFieldPath: spec.providerConfigRef.name
+      - fromFieldPath: spec.parameters.db_tags
+        toFieldPath: spec.forProvider.varmap.db_tags

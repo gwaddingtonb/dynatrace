@@ -1,0 +1,45 @@
+---
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: xclouddatabases.composite.clouddatabase.allianz.io
+  namespace: customer
+  labels:
+    provider: aws
+    implementation: terraform
+spec:
+  compositeTypeRef:
+    apiVersion: composite.clouddatabase.allianz.io/v1alpha1
+    kind: XClouddatabase
+  resources:
+    - name: tf-clouddatabase
+      base:
+        apiVersion: tf.upbound.io/v1beta1
+        kind: Workspace
+        metadata:
+          annotations:
+            # platform.cloud.allianz/cmdb-class: cmdb_ci_cloud_database
+            platform.cloud.allianz/service-name: "FCP Postgres Aurora"
+            # platform.cloud.allianz/cmdb-parent-class: cmdb_ci_aws_datacenter,cmdb_ci_cloud_service_account
+        spec:
+          providerConfigRef:
+            # patched
+            name:
+          forProvider:
+            source: Remote
+            module: git::https://github.developer.allianz.io/azdcloud-ops/db-service-team-terraform-modules.git?ref=modules_v2
+            entrypoint: crossplane_modules/v2
+            vars:
+              - key: region
+              - key: region_secondary
+            varmap:
+              deployment_variables:
+      patches:
+        - fromFieldPath: spec.parameters.region
+          toFieldPath: spec.forProvider.vars[0].value
+        - fromFieldPath: spec.parameters.region_secondary
+          toFieldPath: spec.forProvider.vars[1].value
+        - fromFieldPath: spec.parameters.account_name
+          toFieldPath: spec.providerConfigRef.name
+        - fromFieldPath: spec.parameters.deployment_variables
+          toFieldPath: spec.forProvider.varmap.deployment_variables

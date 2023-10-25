@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: product-versions
+  namespace: custom-versioning
+data:
+  cloudDatabasePackage: 1.0.4-mongodb10265g4708806.93.4708806

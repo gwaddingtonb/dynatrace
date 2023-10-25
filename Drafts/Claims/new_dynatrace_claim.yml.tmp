@@ -1,0 +1,52 @@
+---
+apiVersion: composite.clouddatabase.allianz.io/v1alpha1
+kind: DynatraceDashboard
+metadata:
+  name: dynatrace-deployment
+  namespace: customer
+spec:
+  parameters:
+    github_owner: globalmonitoring
+    github_token: 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
+    customer_repository: preprod-mz-az-tech-dagobert
+    aws_account: "143279261734"
+    stage: preprod
+    dynatrace_management_zone: "me-az-tech-dagobert"
+    dynatrace_alerting_profile: "apso-mz-az-tech-dagobert-Default"
+    snow_f_group: "AZD.BIT-KVI5.CO-AZDCLOUD"
+    email_recepients: extern.binder_david@allianz.de
+    notification_email: "true"
+    notification_snow: "false"
+    notification_zis: "true"
+    param1_name: "CPU Usage"
+    param1_graph: "builtin:cloud.aws.rds.cpu.usage"
+    param1_aggregation: "AVG"
+    param1_condition: "ABOVE"
+    param1_threshold_orange: "95"
+    param1_threshold_red: "99"
+    param2_name: "Read IOPS"
+    param2_graph: "builtin:cloud.aws.rds.ops.read"
+    param2_aggregation: "AVG"
+    param2_condition: "ABOVE"
+    param2_threshold_orange: "10000"
+    param2_threshold_red: "20000"
+    param3_name: "Write IOPS"
+    param3_graph: "builtin:cloud.aws.rds.ops.write"
+    param3_aggregation: "AVG"
+    param3_condition: "ABOVE"
+    param3_threshold_orange: "10000"
+    param3_threshold_red: "20000"
+    param4_name: "SWAP Usage"
+    param4_graph: "builtin:cloud.aws.rds.memory.swap"
+    param4_aggregation: "AVG"
+    param4_condition: "ABOVE"
+    param4_threshold_orange: "3.5"
+    param4_threshold_red: "4"
+    param5_name: "Free Memory"
+    param5_graph: "builtin:cloud.aws.rds.memory.freeable"
+    param5_aggregation: "AVG"
+    param5_condition: "BELOW"
+    param5_threshold_orange: "100" 
+    param5_threshold_red: "50"
+    db_tags:
+      - "[AWS]dynatrace"

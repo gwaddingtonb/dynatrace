@@ -1,0 +1,50 @@
+{
+    "schemaId": "builtin:anomaly-detection.metric-events",
+    "schemaVersion": "1.0.14",
+    "scope": "environment",
+    "value": {
+      "enabled": true,
+      "summary": "${MANAGEMENT_ZONE}_cpu_alert",
+      "queryDefinition": {
+        "type": "METRIC_KEY",
+        "metricKey": "builtin:cloud.aws.rds.cpu.usage",
+        "aggregation": "AVG",
+        "managementZone": null,
+        "queryOffset": null,
+        "entityFilter": {
+          "dimensionKey": "dt.entity.relational_database_service",
+          "conditions": [
+            {
+              "type": "NAME",
+              "operator": "STARTS_WITH",
+              "value": "aims"
+            },
+            {
+              "type": "MANAGEMENT_ZONE",
+              "operator": "EQUALS",
+              "value": "${MANAGEMENT_ZONE}"
+            }
+          ]
+        },
+        "dimensionFilter": []
+      },
+      "modelProperties": {
+        "type": "STATIC_THRESHOLD",
+        "threshold": 90,
+        "alertOnNoData": false,
+        "alertCondition": "ABOVE",
+        "violatingSamples": 3,
+        "samples": 5,
+        "dealertingSamples": 5
+      },
+      "eventTemplate": {
+        "title": "${MANAGEMENT_ZONE}_cpu_alert_${DB_CLUSTER_INSTANCE_NAME0}",
+        "description": "CPU Usage Alert for AIMS Databases",
+        "eventType": "CUSTOM_ALERT",
+        "davisMerge": false,
+        "metadata": []
+      },
+      "eventEntityDimensionKey": "dt.entity.relational_database_service",
+      "legacyId": "e9a88a52-26bc-42b3-8f1e-2ed71c97d19d"
+    }
+}

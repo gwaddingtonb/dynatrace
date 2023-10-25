@@ -1,0 +1,5 @@
+log_monitoring_api_key:
+  type: API_KEY_HASH
+  keyHash: 8690d7767535d1ab92d8e532f97d8461ea960a7f354ca8643a63cefe9b440adb019e23fa6032dfe2c1762ca407692a4a1cb786bb6263441ab1f6886f04c25abc
+  scopes:
+    - log.write

@@ -1,0 +1,50 @@
+{
+  "schemaId": "builtin:anomaly-detection.metric-events",
+  "schemaVersion": "1.0.14",
+  "scope": "environment",
+  "value": {
+    "enabled": true,
+    "summary": "${MANAGEMENT_ZONE}_swap_alert",
+    "queryDefinition": {
+      "type": "METRIC_KEY",
+      "metricKey": "builtin:cloud.aws.rds.memory.swap",
+      "aggregation": "AVG",
+      "managementZone": null,
+      "queryOffset": null,
+      "entityFilter": {
+        "dimensionKey": "dt.entity.relational_database_service",
+        "conditions": [
+          {
+            "type": "NAME",
+            "operator": "STARTS_WITH",
+            "value": "aims"
+          },
+          {
+            "type": "MANAGEMENT_ZONE",
+            "operator": "EQUALS",
+            "value": "${MANAGEMENT_ZONE}"
+          }
+        ]
+      },
+      "dimensionFilter": []
+    },
+    "modelProperties": {
+      "type": "STATIC_THRESHOLD",
+      "threshold": 4000000000,
+      "alertOnNoData": false,
+      "alertCondition": "ABOVE",
+      "violatingSamples": 5,
+      "samples": 30,
+      "dealertingSamples": 30
+    },
+    "eventTemplate": {
+      "title": "${MANAGEMENT_ZONE}_swap_alert_${DB_CLUSTER_INSTANCE_NAME0}",
+      "description": "Custom Alert for high SWAP usage",
+      "eventType": "CUSTOM_ALERT",
+      "davisMerge": false,
+      "metadata": []
+    },
+    "eventEntityDimensionKey": "dt.entity.relational_database_service",
+    "legacyId": "b8921be3-5484-439b-9d24-ad1148d375b6"
+  }
+}
