@@ -1,0 +1,48 @@
+{
+    "schemaId":"builtin:anomaly-detection.metric-events",
+    "schemaVersion":"1.0.15",
+    "scope":"environment",
+    "value":{
+       "enabled":true,
+       "summary":"mz-az-tech-dagobert  - Dagobert -  RESTART Event",
+       "queryDefinition":{
+          "type":"METRIC_KEY",
+          "metricKey":"builtin:cloud.aws.rds.restarts",
+          "aggregation":"VALUE",
+          "queryOffset":null,
+          "entityFilter":{
+             "dimensionKey":"dt.entity.relational_database_service",
+             "conditions":[
+                {
+                   "type":"TAG",
+                   "operator":"EQUALS",
+                   "value":"[AWS]dynatrace"
+                }
+             ]
+          },
+          "dimensionFilter":[
+             
+          ]
+       },
+       "modelProperties":{
+          "type":"STATIC_THRESHOLD",
+          "threshold":0,
+          "alertOnNoData":false,
+          "alertCondition":"ABOVE",
+          "violatingSamples":3,
+          "samples":5,
+          "dealertingSamples":5
+       },
+       "eventTemplate":{
+          "title":"{entityname} stopped",
+          "description":"The {metricname} value was {alert_condition} normal behavior.",
+          "eventType":"CUSTOM_ALERT",
+          "davisMerge":true,
+          "metadata":[
+             
+          ]
+       },
+       "eventEntityDimensionKey":null,
+       "legacyId":null
+    }
+ }

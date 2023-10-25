@@ -1,0 +1,48 @@
+{
+  "schemaId": "builtin:anomaly-detection.metric-events",
+  "schemaVersion": "1.0.14",
+  "scope": "environment",
+  "value": {
+    "enabled": true,
+    "summary": "mz-az-tech-dagobert - Dagobert - SWAP Usage",
+    "queryDefinition": {
+      "type": "METRIC_KEY",
+      "metricKey": "builtin:cloud.aws.rds.memory.swap",
+      "aggregation": "AVG",
+      "entityFilter": {
+        "dimensionKey": "dt.entity.relational_database_service",
+        "conditions": [
+          {
+            "type": "TAG",
+            "operator": "EQUALS",
+            "value": "[AWS]dynatrace"
+          },
+          {
+            "type": "MANAGEMENT_ZONE",
+            "operator": "EQUALS",
+            "value": "mz-az-tech-dagobert"
+          }
+        ]
+      },
+      "dimensionFilter": []
+    },
+    "modelProperties": {
+      "type": "STATIC_THRESHOLD",
+      "threshold": 4,
+      "alertOnNoData": false,
+      "alertCondition": "ABOVE",
+      "violatingSamples": 5,
+      "samples": 30,
+      "dealertingSamples": 30
+    },
+    "eventTemplate": {
+      "title": "mz-az-tech-dagobert - SWAP Usage",
+      "description": "SWAP Usage Custom Alert",
+      "eventType": "CUSTOM_ALERT",
+      "davisMerge": false,
+      "metadata": []
+    },
+    "eventEntityDimensionKey": "dt.entity.relational_database_service",
+    "legacyId":null
+  }
+}

@@ -1,0 +1,34 @@
+---
+apiVersion: tf.upbound.io/v1beta1
+kind: ProviderConfig
+metadata:
+  name: github-4-dynatrace-v1
+spec:
+  pluginCache: false
+  credentials:
+  - filename: gitprovider.txt
+    source: Secret
+    secretRef:
+      namespace: customer
+      name: cloud-database-github-credentials
+      key: token
+  - filename: aws-creds.ini
+    source: Secret
+    secretRef:
+      namespace: customer
+      name: aws-secret-creds
+      key: aws-creds.ini
+  configuration: |
+     terraform {
+        backend "s3" {
+          shared_credentials_file = "aws-creds.ini"
+          bucket = "azt-crossplane-tf-backend-test"
+          key    = "terraform.tfstate"
+          region = "eu-central-1"
+        }
+     }
+     provider "github" {
+       token = file("${path.module}/gitprovider.txt")
+       owner = globalmonitoring
+       base_url = https://github.developer.allianz.io
+     }

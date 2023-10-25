@@ -1,0 +1,51 @@
+---
+apiVersion: composite.clouddatabase.allianz.io/v1alpha1
+kind: Dynatrace
+metadata:
+  name: dynatrace-deployment
+  namespace: customer
+spec:
+  parameters:
+    provider_configuration: aws-clouddatabase-v2
+    dashboard_name: "Dagobert"
+    github_token: "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"
+    customer_repository: "preprod-mz-az-tech-dagobert"
+    dynatrace_management_zone: "mz-az-tech-dagobert"
+    snow_f_group: "AZD.BIT-KVI5.CO-AZDCLOUD"
+    email_recipients: "extern.binder_david@allianz.de"
+    db_tags: "[AWS]dynatrace"
+    dynatrace_alerting_profile: "Default"
+    notification_email: "true"
+    notification_snow: "false"
+    notification_zis: "true"
+    metric_groups:
+    - name: "CPU Usage"
+      graph: "builtin:cloud.aws.rds.cpu.usage"
+      aggregation: "AVG"
+      condition: "ABOVE"
+      warning_threshold: "95"
+      error_threshold: "99"
+    - name: "Read IOPS"
+      graph: "builtin:cloud.aws.rds.ops.read"
+      aggregation: "AVG"
+      condition: "ABOVE"
+      warning_threshold: "10000"
+      error_threshold: "20000"
+    - name: "Write IOPS"
+      graph: "builtin:cloud.aws.rds.ops.write"
+      aggregation: "AVG"
+      condition: "ABOVE"
+      warning_threshold: "10000"
+      error_threshold: "20000"
+    - name: "SWAP Usage"
+      graph: "builtin:cloud.aws.rds.memory.swap"
+      aggregation: "AVG"
+      condition: "ABOVE"
+      warning_threshold: "3.5"
+      error_threshold: "4.0"
+    - name: "Free Memory"
+      graph: "builtin:cloud.aws.rds.memory.freeable"
+      aggregation: "AVG"
+      condition: "BELOW"
+      warning_threshold: "100"
+      error_threshold: "10"
