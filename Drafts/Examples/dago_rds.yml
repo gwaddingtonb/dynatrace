@@ -1,5 +1,0 @@
-label: "dago_rds"                                
-accountId: "143279261734"
-iamRole: "aztec-cloudtribe-dynatrace-assumerole"
-taggedOnly: false
-tagsToMonitor: []
